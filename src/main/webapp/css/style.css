@@ -1,0 +1,6 @@
+.navbar-nav li a{
+	color: #fff;
+}
+.navbar-nav li a:hover{
+	color: rgba(255,255,255,.5);
+}
