@@ -6,34 +6,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.ipartek.formacion.modelo.pojo.Agente;
 
 /**
- * Servlet implementation class IndexController
+ * Servlet implementation class MultarController
  */
-@WebServlet("/index")
-public class IndexController extends HttpServlet {
+@WebServlet("/multar")
+public class MultarController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		Agente ag = new Agente();
-		ag.setNombre("Takelberry");
-		ag.setId((long) 4);
-		ag.setPlaca((long) 66666);
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("agente", ag);
-		
-		request.getRequestDispatcher("index.jsp").forward(request, response);
-		
-		
+		// TODO Auto-generated method stub
+		request.getRequestDispatcher("multar.jsp").forward(request, response);
 	}
 
 	/**

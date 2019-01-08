@@ -1,39 +1,44 @@
 package com.ipartek.formacion.controller;
 
 import java.io.IOException;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
-import com.ipartek.formacion.modelo.pojo.Agente;
 
 /**
- * Servlet implementation class IndexController
+ * Servlet implementation class ListadoMultasController
  */
-@WebServlet("/index")
-public class IndexController extends HttpServlet {
+@WebServlet("/listadomultas")
+public class ListadoMultasController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
+	private MultasDAO dao;
+	private ValidatorFactory factory;
+	private Validator validator;
+	
+	@Override
+    public void init(ServletConfig config) throws ServletException {    
+    	super.init(config);
+    	dao = MultasDAO.getInstance();    	
+    	factory  = Validation.buildDefaultValidatorFactory();
+    	validator  = factory.getValidator();
+    }
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		request.setAttribute("multas", dao.getAll());
 		
-		Agente ag = new Agente();
-		ag.setNombre("Takelberry");
-		ag.setId((long) 4);
-		ag.setPlaca((long) 66666);
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("agente", ag);
-		
-		request.getRequestDispatcher("index.jsp").forward(request, response);
-		
-		
+		request.getRequestDispatcher("multas.jsp").forward(request, response);
 	}
 
 	/**
