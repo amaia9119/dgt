@@ -4,3 +4,9 @@
 .navbar-nav li a:hover{
 	color: rgba(255,255,255,.5);
 }
+.shadow-sm a{
+	width: 100%;
+}
+.shadow-sm{
+	margin: 20px 0;
+}

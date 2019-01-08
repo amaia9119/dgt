@@ -8,6 +8,7 @@
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -33,9 +34,16 @@
     </button>
   </nav>
 </div>
-<div class="container-fluid">
-<a class="btn btn-outline-success" href="#" role="button">Multar</a>
-<a class="btn btn-outline-primary" href="#" role="button">Ver multas</a>
+
+<div class="container mt-4">
+	<div class="text-center d-flex align-items-center row">
+		<div class="shadow-sm col-sm-12">  
+			<a class="btn btn-outline-success" href="#" role="button"><span class="icon-pencil2"></span><p>Multar</p></a>
+		</div>
+		<div class="shadow-sm col-sm-12">
+			<a class="btn btn-outline-primary" href="#" role="button"><span class="icon-eye"></span><p>Ver multas</p></a>
+		</div>
+	</div>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
