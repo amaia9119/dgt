@@ -14,9 +14,10 @@ import com.ipartek.formacion.modelo.pojo.Multa;
 public class MultaDao {
 	
 	private static MultaDao INSTANCE = null;
-	private static final String SQL_GETALL  = "select\r\n" + 
-			"coche.modelo as 'modelo del coche',\r\n" + 
-			"multa.importe as 'importe de multa',\r\n" + 
+	private static final String SQL_GETALL  = "select\r\n"
+			+ "multa.id as 'id'" + 
+			"coche.modelo as 'modelo_del_coche',\r\n" + 
+			"multa.importe as 'importe_de_multa',\r\n" + 
 			"multa.concepto as 'concepto',\r\n" + 
 			"multa.fecha as 'fecha'\r\n" + 
 			"from multa\r\n" + 
@@ -85,9 +86,9 @@ public class MultaDao {
 	private Multa rowMapper(ResultSet rs) throws SQLException {
 		Multa m = new Multa();
 		m.setId( rs.getLong("id"));
-		m.setImporte(rs.getInt("importe"));
+		m.setImporte(rs.getInt("importe_de_multa"));
 		m.setConcepto(rs.getString("concepto"));
-		m.setCoche(new Coche(rs.getLong("id"), rs.getString("matricula"), rs.getString("modelo"), rs.getInt("km")));
+		m.setCoche(new Coche(rs.getLong("id"), rs.getString("matricula"), rs.getString("modelo_del_coche"), rs.getInt("km")));
 	
 		return m;
 	}
