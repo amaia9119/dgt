@@ -50,7 +50,7 @@ public class MultaDao {
 				try {					
 					multas.add(rowMapper(rs));
 				} catch (Exception e) {
-					System.out.println("usuario no valido");
+					System.out.println("multa no valido");
 					e.printStackTrace();
 				}
 			} // while
@@ -70,7 +70,7 @@ public class MultaDao {
 				PreparedStatement pst = conn.prepareStatement(SQL_INSERT);) {
 
 			pst.setInt(1, m.getImporte() );
-			pst.setString(2, m.getConcepto() );
+			pst.setString(2, m.getConcepto());
 			pst.setObject(3, m.getCoche().getId());
 			int affectedRows = pst.executeUpdate();
 			if (affectedRows == 1) {
