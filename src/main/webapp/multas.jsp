@@ -13,7 +13,7 @@
 		<c:forEach items="${multas}" var="m">
 			<tr>
 				<th scope="row">${m.fecha}</th>
-				<td>${m.matricula}</td>
+				<td>${m.concepto}</td>
 				<td>${m.importe}</td>
 			</tr>
 		</c:forEach>

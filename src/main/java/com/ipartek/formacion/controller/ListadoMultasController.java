@@ -8,9 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import com.ipartek.formacion.modelo.dao.MultaDao;
 
@@ -22,15 +19,11 @@ import com.ipartek.formacion.modelo.dao.MultaDao;
 public class ListadoMultasController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MultaDao dao;
-	private ValidatorFactory factory;
-	private Validator validator;
 	
 	@Override
     public void init(ServletConfig config) throws ServletException {    
     	super.init(config);
     	dao = MultaDao.getInstance();    	
-    	factory  = Validation.buildDefaultValidatorFactory();
-    	validator  = factory.getValidator();
     }
 	
 	/**
