@@ -10,3 +10,7 @@
 .shadow-sm{
 	margin: 20px 0;
 }
+span.icon-arrow-left2 {
+    color: rgba(255,255,255,.5);
+    font-size: large;
+}
