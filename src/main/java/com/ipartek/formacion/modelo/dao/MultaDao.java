@@ -15,8 +15,11 @@ public class MultaDao {
 	
 	private static MultaDao INSTANCE = null;
 	private static final String SQL_GETALL  = "select\r\n"
-			+ "multa.id as 'id'," + 
-			"coche.modelo as 'modelo_del_coche',\r\n" + 
+			+ "multa.id as 'id',"
+			+ "coche.id as 'id_coche',\r\n"+ 
+			"coche.modelo as 'modelo_coche',\r\n"
+			+ "coche.matricula as 'matricula_coche',\r\n"
+			+ "coche.km as 'kilometros',\r\n" + 
 			"multa.importe as 'importe_de_multa',\r\n" + 
 			"multa.concepto as 'concepto',\r\n" + 
 			"multa.fecha as 'fecha'\r\n" + 
@@ -88,7 +91,8 @@ public class MultaDao {
 		m.setId( rs.getLong("id"));
 		m.setImporte(rs.getInt("importe_de_multa"));
 		m.setConcepto(rs.getString("concepto"));
-		m.setCoche(new Coche(rs.getLong("id"), rs.getString("matricula"), rs.getString("modelo_del_coche"), rs.getInt("km")));
+		m.setFecha(rs.getDate("fecha"));
+		m.setCoche(new Coche(rs.getLong("id_coche"), rs.getString("matricula_coche"), rs.getString("modelo_coche"), rs.getInt("kilometros")));
 	
 		return m;
 	}
