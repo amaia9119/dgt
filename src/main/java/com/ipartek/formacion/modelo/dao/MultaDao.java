@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.ipartek.formacion.modelo.pojo.Agente;
 import com.ipartek.formacion.modelo.pojo.Coche;
 import com.ipartek.formacion.modelo.pojo.Multa;
 
@@ -27,7 +28,7 @@ public class MultaDao {
 			"inner join agente on multa.id_agente=agente.id\r\n" + 
 			"inner join coche on multa.id_coche=coche.id ";
 	
-	private static final String SQL_INSERT = "INSERT INTO multa (importe, concepto,id_coche,id_agente) VALUES (?,?,?,?);";
+	private static final String SQL_INSERT = "INSERT INTO multa (importe, concepto,id_coche) VALUES (?,?,?);";
 	
 	// constructor privado, solo acceso por getInstance()
 	private MultaDao() {
@@ -54,7 +55,7 @@ public class MultaDao {
 				try {					
 					multas.add(rowMapper(rs));
 				} catch (Exception e) {
-					System.out.println("multa no valido");
+					System.out.println("multa no valida");
 					e.printStackTrace();
 				}
 			} // while
@@ -93,7 +94,6 @@ public class MultaDao {
 		m.setConcepto(rs.getString("concepto"));
 		m.setFecha(rs.getDate("fecha"));
 		m.setCoche(new Coche(rs.getLong("id_coche"), rs.getString("matricula_coche"), rs.getString("modelo_coche"), rs.getInt("kilometros")));
-	
 		return m;
 	}
 }
