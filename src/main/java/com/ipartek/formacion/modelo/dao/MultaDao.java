@@ -15,7 +15,7 @@ public class MultaDao {
 	
 	private static MultaDao INSTANCE = null;
 	private static final String SQL_GETALL  = "select\r\n"
-			+ "multa.id as 'id'" + 
+			+ "multa.id as 'id'," + 
 			"coche.modelo as 'modelo_del_coche',\r\n" + 
 			"multa.importe as 'importe_de_multa',\r\n" + 
 			"multa.concepto as 'concepto',\r\n" + 
