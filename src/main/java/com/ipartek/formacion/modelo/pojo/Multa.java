@@ -11,6 +11,7 @@ public class Multa {
 	
 	Coche c = new Coche();
 	
+	
 	public Multa() {
 		super();
 	}
@@ -22,6 +23,7 @@ public class Multa {
 		setConcepto(concepto);
 		setFecha(fecha);
 		setCoche(c);
+	
 	}
 
 	public Coche getCoche() {
@@ -63,4 +65,15 @@ public class Multa {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+
+	@Override
+	public String toString() {
+		return "Multa [id=" + id + ", importe=" + importe + ", concepto=" + concepto + ", fecha=" + fecha + ", c=" + c
+				+ "]";
+	}
+
+	
+
+	
+
 }

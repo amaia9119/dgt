@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.ipartek.formacion.modelo.pojo.Agente;
+
 import com.ipartek.formacion.modelo.pojo.Coche;
 import com.ipartek.formacion.modelo.pojo.Multa;
 
@@ -28,7 +28,7 @@ public class MultaDao {
 			"inner join agente on multa.id_agente=agente.id\r\n" + 
 			"inner join coche on multa.id_coche=coche.id ";
 	
-	private static final String SQL_INSERT = "INSERT INTO multa (importe, concepto,id_coche) VALUES (?,?,?);";
+	private static final String SQL_INSERT = "INSERT INTO multa (importe, concepto,id_coche,id_agente) VALUES (?,?,?,?);";
 	
 	// constructor privado, solo acceso por getInstance()
 	private MultaDao() {
@@ -46,7 +46,7 @@ public class MultaDao {
 	public ArrayList<Multa> getAll() {
 
 		ArrayList<Multa> multas = new ArrayList<Multa>();
-	
+		
 		try (Connection conn = ConnectionManager.getConnection();
 				PreparedStatement pst = conn.prepareStatement(SQL_GETALL);
 				ResultSet rs = pst.executeQuery()) {
@@ -54,11 +54,12 @@ public class MultaDao {
 			while (rs.next()) {
 				try {					
 					multas.add(rowMapper(rs));
+					
 				} catch (Exception e) {
 					System.out.println("multa no valida");
 					e.printStackTrace();
 				}
-			} // while
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,7 +68,7 @@ public class MultaDao {
 	}
 	
 	
-	public boolean insert(Multa m) throws SQLException {
+	public boolean insert(Multa m, Long id_agente) throws SQLException {
 
 		boolean resul = false;
 	
@@ -77,6 +78,7 @@ public class MultaDao {
 			pst.setInt(1, m.getImporte() );
 			pst.setString(2, m.getConcepto());
 			pst.setObject(3, m.getCoche().getId());
+			pst.setObject(4, id_agente);
 			int affectedRows = pst.executeUpdate();
 			if (affectedRows == 1) {
 				resul = true;

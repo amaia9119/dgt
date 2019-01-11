@@ -55,6 +55,11 @@ public class Agente {
 	public void setPlaca(Long placa) {
 		this.placa = placa;
 	}
+
+	@Override
+	public String toString() {
+		return "Agente [id=" + id + ", nombre=" + nombre + ", placa=" + placa + ", multas=" + multas + "]";
+	}
 	
 	
 }
