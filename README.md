@@ -1,6 +1,6 @@
 # DGT
 Aplicación móvil para crear multas y ver el listado de las multas ya creadas.
-![Alt text](imgReadme/index.png)
-![Alt text](imgReadme/menu.png)
-![Alt text](imgReadme/listado.png)
-![Alt text](imgReadme/multar.png)
+![Alt text](https://github.com/amaia9119/dgt/tree/master/imgReadme/index.png)
+![Alt text](https://github.com/amaia9119/dgt/tree/master/imgReadme/menu.png)
+![Alt text](https://github.com/amaia9119/dgt/tree/master/imgReadme/listado.png)
+![Alt text](https://github.com/amaia9119/dgt/tree/master/imgReadme/multar.png)
