@@ -7,18 +7,26 @@
     font-size: 3.5rem;
   }
 }
-
+.container.marketing {
+    width: 90%;
+}
 .navbar-nav li a{
 	color: #fff;
 }
 .navbar-nav li a:hover{
 	color: rgba(255,255,255,.5);
 }
+nav > span {
+    color: rgba(255,255,255,.8);
+    position: absolute;
+    right: 95px;
+}
 .shadow-sm a{
 	min-height: 150px;
 }
 .shadow-sm{
 	margin: 20px 0;
+	padding: 0;
 }
 span.icon-arrow-left2 {
     color: rgba(255,255,255,.5);

@@ -1,4 +1,11 @@
 <div class="pos-f-t">
+  <nav class="navbar navbar-dark bg-dark">
+  	<a href="javascript:history.back(-1);" title="Ir la página anterior"><span class="icon-arrow-left2"></span></a>
+  	<span>${sessionScope.agente.nombre}</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -6,20 +13,14 @@
 	        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="multar">Multar</a>
+	        <a class="nav-link" href="matricula">Multar</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="listadomultas">Ver multas</a>
+	        <a class="nav-link" href="multas">Ver multas</a>
 	      </li>
 	    </ul>
     </div>
   </div>
-  <nav class="navbar navbar-dark bg-dark">
-  	<a href="javascript:history.back(-1);" title="Ir la página anterior"><span class="icon-arrow-left2"></span></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  </nav>
 </div>
 
 <main role="main">

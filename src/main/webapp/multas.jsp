@@ -1,5 +1,6 @@
 <%@ include file="../includes/header.jsp"  %>
 <%@ include file="../includes/navbar.jsp"  %>
+<%@ include file="../includes/mensajes.jsp"  %>
 
 <table  class="table table-striped">
 	<thead>

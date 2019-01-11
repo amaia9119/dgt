@@ -1,6 +1,5 @@
 package com.ipartek.formacion.modelo.pojo;
 
-import java.sql.Date;
 
 public class Coche {
 	
