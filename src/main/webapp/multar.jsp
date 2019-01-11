@@ -5,9 +5,9 @@
 	<div class="row">
 		<div class="col">
 			<input type="text" class="form-control" placeholder="Importe">
-			<div class="input-group-prepend">
+			<!--<div class="input-group-prepend">
 			<div class="input-group-text">€</div>
-			</div>
+			</div>-->
 		</div>
 		<div class="col">
 			<input type="text" class="form-control" placeholder="Concepto">

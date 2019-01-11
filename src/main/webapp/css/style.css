@@ -1,3 +1,13 @@
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+}
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
 .navbar-nav li a{
 	color: #fff;
 }
@@ -5,7 +15,7 @@
 	color: rgba(255,255,255,.5);
 }
 .shadow-sm a{
-	width: 100%;
+	min-height: 150px;
 }
 .shadow-sm{
 	margin: 20px 0;
@@ -13,4 +23,10 @@
 span.icon-arrow-left2 {
     color: rgba(255,255,255,.5);
     font-size: large;
+}
+.shadow-sm > a > div > span {
+    font-size: 2em;
+}
+.shadow-sm > a > div > p {
+    font-size: 1.5em;
 }
