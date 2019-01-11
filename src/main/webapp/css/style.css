@@ -5,7 +5,9 @@
 	color: rgba(255,255,255,.5);
 }
 .shadow-sm a{
-	width: 100%;
+	min-height: 300px;
+    width: 100%;
+    margin: 20px 0;
 }
 .shadow-sm{
 	margin: 20px 0;
@@ -13,4 +15,12 @@
 span.icon-arrow-left2 {
     color: rgba(255,255,255,.5);
     font-size: large;
+}
+.shadow-sm > a > div > span {
+    font-size: 3em;
+    width: 100%;
+}
+.shadow-sm > a > div > p {
+    font-size: 2.5em;
+    width: 100%;
 }
