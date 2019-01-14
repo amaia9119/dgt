@@ -2,9 +2,10 @@
 <%@ include file="../includes/navbar.jsp"  %>
 <%@ include file="../includes/mensajes.jsp"  %>
 
-<form action="matricula" method="post">
+<form action="multas" method="post">
 	<div class="row">
-			<input type="hidden" class="form-control" name="coche_id" placeholder="${coche.id}">
+			<input type="hidden" class="form-control" name="coche_id" value="${coche.id}">
+			<input type="hidden" class="form-control" name="id_agente" value="${sessionScope.ag.id}">
 		<div class="col">
 			<input type="text" class="form-control" placeholder="${coche.matricula}" readonly>
 		</div>

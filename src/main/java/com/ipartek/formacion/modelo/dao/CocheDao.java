@@ -10,7 +10,7 @@ import com.ipartek.formacion.modelo.pojo.Coche;
 public class CocheDao {
 
 	private final static String SQL_GETBYMATRICULA = "SELECT c.id, c.matricula, c.modelo, c.km FROM coche AS c WHERE c.matricula =?;";
-	// private final static String SQL_GETBYID="SELECT c.id, c.matricula, c.modelo,
+	private final static String SQL_GETBYID="SELECT c.id, c.matricula, c.modelo, c.km FROM coche AS c WHERE c.id =?;";
 	// c.km FROM coche AS c WHERE c.id =?;";
 
 	private static CocheDao INSTANCE = null;
@@ -51,6 +51,31 @@ public class CocheDao {
 			}
 			return c;
 		}
+		}
+		
+		public Coche getById(Long id) throws SQLException {
+			Coche c = null;
+			try (Connection conn = ConnectionManager.getConnection();
+					PreparedStatement pst = conn.prepareStatement(SQL_GETBYID);) {
+				pst.setLong(1, id);
+				try (ResultSet rs = pst.executeQuery()) {
+
+					while (rs.next()) {
+						try {
+							c = new Coche(rs.getLong("id"), rs.getString("matricula"), rs.getString("modelo"),
+									rs.getInt("km"));
+
+						} catch (Exception e) {
+							System.out.println("matricula no valida");
+							e.printStackTrace();
+						}
+					} // while
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return c;
+			}
 
 //	private Coche rowMapper(ResultSet rs) throws SQLException {
 //		Coche c  =new Coche();

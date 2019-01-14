@@ -21,6 +21,9 @@ nav > span {
     position: absolute;
     right: 95px;
 }
+main {
+    margin-top: 40px;
+}
 .shadow-sm a{
 	min-height: 150px;
 }
@@ -37,4 +40,7 @@ span.icon-arrow-left2 {
 }
 .shadow-sm > a > div > p {
     font-size: 1.5em;
+}
+div#DataTables_Table_0_wrapper {
+    width: 100%;
 }
