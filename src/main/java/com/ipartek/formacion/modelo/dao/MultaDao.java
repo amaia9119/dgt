@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 
 import com.ipartek.formacion.modelo.pojo.Coche;
 import com.ipartek.formacion.modelo.pojo.Multa;
@@ -13,7 +14,7 @@ import com.ipartek.formacion.modelo.pojo.Multa;
 
 
 public class MultaDao {
-	
+	private final static Logger LOG = Logger.getLogger(MultaDao.class);
 	private static MultaDao INSTANCE = null;
 	private static final String SQL_GETALL  = "select\r\n"
 			+ "multa.id as 'id',"
@@ -58,15 +59,14 @@ public class MultaDao {
 			while (rs.next()) {
 				try {					
 					multas.add(rowMapper(rs));
-					
+					LOG.info("multa valida");
 				} catch (Exception e) {
-					System.out.println("multa no valida");
-					e.printStackTrace();
+					LOG.error("multa no valida");
 				}
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.debug(e);
 		}
 		return multas;
 	}
@@ -84,11 +84,11 @@ public class MultaDao {
 					){
 					while(rs.next()) {
 						multasAgente.add(rowMapper(rs));
-						//multasAgente.add(m.getId(), m);;
+						
 					}
 				}
 		}catch (Exception e) {
-			e.printStackTrace();
+			LOG.debug(e);
 		}
 		
 		return multasAgente;

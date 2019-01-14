@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
+
 import com.ipartek.formacion.modelo.dao.CocheDao;
 import com.ipartek.formacion.modelo.pojo.Alerta;
 import com.ipartek.formacion.modelo.pojo.Coche;
@@ -20,6 +23,7 @@ import com.ipartek.formacion.modelo.pojo.Coche;
 @WebServlet("/matricula")
 public class MatriculaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final static Logger LOG = Logger.getLogger(MatriculaController.class);
 	private CocheDao dao;
        
 @Override
@@ -53,9 +57,9 @@ public void destroy() {
 		if (!matricula.equals("")) {
 			try {
 				c=dao.getByMatricula(matricula);
+				LOG.info("Matricula encontrada" + matricula);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("Matricula no encontrada" + matricula);
 			}
 			
 			if (c != null) {
