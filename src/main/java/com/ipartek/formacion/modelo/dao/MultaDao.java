@@ -77,8 +77,8 @@ public class MultaDao {
 
 			pst.setInt(1, m.getImporte() );
 			pst.setString(2, m.getConcepto());
-			pst.setObject(3, m.getCoche().getId());
-			pst.setObject(4, id_agente);
+			pst.setLong(3, m.getCoche().getId());
+			pst.setLong(4, id_agente);
 			int affectedRows = pst.executeUpdate();
 			if (affectedRows == 1) {
 				resul = true;
