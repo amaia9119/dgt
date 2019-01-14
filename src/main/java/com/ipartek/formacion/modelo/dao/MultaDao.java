@@ -29,6 +29,10 @@ public class MultaDao {
 			"inner join coche on multa.id_coche=coche.id ";
 	
 	private static final String SQL_INSERT = "INSERT INTO multa (importe, concepto,id_coche,id_agente) VALUES (?,?,?,?);";
+	private final static String SQL_GETALLBYIDAGENTE_FECHA_BAJA="SELECT m.id AS id_multa, importe, concepto, fecha_alta ,id_agente,id_coche, c.matricula, c.modelo, c.km"
+			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND m.fecha_baja IS NOT NULL "
+			+ "ORDER BY fecha_alta DESC ";
+	private final static String SQL_UPDATE_FECHA_BAJA="UPDATE multa SET fecha_baja=CURRENT_TIMESTAMP() WHERE id =?";
 	
 	// constructor privado, solo acceso por getInstance()
 	private MultaDao() {
@@ -67,6 +71,29 @@ public class MultaDao {
 		return multas;
 	}
 	
+	public ArrayList<Multa> getAllByIdAgenteDarBaja(Long idAgente) throws SQLException{
+		ArrayList<Multa> multasAgente= new ArrayList<>();
+		String sql = SQL_GETALLBYIDAGENTE_FECHA_BAJA;
+		try(
+			Connection conn = ConnectionManager.getConnection();
+			PreparedStatement pst = conn.prepareStatement(sql);	
+			){
+			pst.setLong(1, idAgente);
+			try(
+					ResultSet rs = pst.executeQuery()
+					){
+					while(rs.next()) {
+						multasAgente.add(rowMapper(rs));
+						//multasAgente.add(m.getId(), m);;
+					}
+				}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return multasAgente;
+}
+	
 	
 	public boolean insert(Multa m, Long id_agente) throws SQLException {
 
@@ -88,6 +115,25 @@ public class MultaDao {
 		return resul;
 
 	}
+	
+	public boolean delete(Long id) throws SQLException{
+		boolean result = false;
+		String sql =SQL_UPDATE_FECHA_BAJA;
+		try(Connection conn = ConnectionManager.getConnection();
+			PreparedStatement pst = conn.prepareStatement(sql);
+			){
+			pst.setLong(1, id);
+			
+			int affectedRows = pst.executeUpdate();
+			if(affectedRows== 1){
+				result =true;
+			}	
+		}
+		
+		
+		
+		return result;
+}
 	
 	private Multa rowMapper(ResultSet rs) throws SQLException {
 		Multa m = new Multa();
