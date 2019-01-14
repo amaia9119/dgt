@@ -13,10 +13,10 @@
 	        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="matricula">Multar</a>
+	        <a class="nav-link" href="${pageContext.request.contextPath}/matricula">Multar</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="multas">Ver multas</a>
+	        <a class="nav-link" href="${pageContext.request.contextPath}/multas">Ver multas</a>
 	      </li>
 	    </ul>
     </div>
