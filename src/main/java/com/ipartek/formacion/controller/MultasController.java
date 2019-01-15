@@ -51,10 +51,19 @@ public class MultasController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Agente a = new Agente();
+		HttpSession sessionn = request.getSession();
+		a = (Agente) sessionn.getAttribute("agenteLogueado");
 
-		request.setAttribute("multas", daoMulta.getAll());
+		try {
+			request.setAttribute("multas", daoMulta.getAllByIdAgente(a.getId()));
+			request.getRequestDispatcher("multas.jsp").forward(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		request.getRequestDispatcher("multas.jsp").forward(request, response);
+		
 	}
 
 	/** 

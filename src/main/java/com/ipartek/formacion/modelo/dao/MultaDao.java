@@ -16,18 +16,9 @@ import com.ipartek.formacion.modelo.pojo.Multa;
 public class MultaDao {
 	private final static Logger LOG = Logger.getLogger(MultaDao.class);
 	private static MultaDao INSTANCE = null;
-	private static final String SQL_GETALL  = "select\r\n"
-			+ "multa.id as 'id',"
-			+ "coche.id as 'id_coche',\r\n"+ 
-			"coche.modelo as 'modelo_coche',\r\n"
-			+ "coche.matricula as 'matricula_coche',\r\n"
-			+ "coche.km as 'kilometros',\r\n" + 
-			"multa.importe as 'importe_de_multa',\r\n" + 
-			"multa.concepto as 'concepto',\r\n" + 
-			"multa.fecha as 'fecha'\r\n" + 
-			"from multa\r\n" + 
-			"inner join agente on multa.id_agente=agente.id\r\n" + 
-			"inner join coche on multa.id_coche=coche.id ";
+	
+	private final static String SQL_GETALLBYIDAGENTE = "SELECT m.id AS id_multa, importe, concepto, fecha_alta ,id_agente,id_coche, c.matricula, c.modelo, c.km"
+			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND fecha_baja IS NULL ORDER BY fecha_alta DESC";
 	
 	private static final String SQL_INSERT = "INSERT INTO multa (importe, concepto,id_coche,id_agente) VALUES (?,?,?,?);";
 	private final static String SQL_GETALLBYIDAGENTE_FECHA_BAJA="SELECT m.id AS id_multa, importe, concepto, fecha_alta ,id_agente,id_coche, c.matricula, c.modelo, c.km"
@@ -48,28 +39,23 @@ public class MultaDao {
 		return INSTANCE;
 	}
 	
-	public ArrayList<Multa> getAll() {
 
-		ArrayList<Multa> multas = new ArrayList<Multa>();
-		
-		try (Connection conn = ConnectionManager.getConnection();
-				PreparedStatement pst = conn.prepareStatement(SQL_GETALL);
-				ResultSet rs = pst.executeQuery()) {
-
-			while (rs.next()) {
-				try {					
+	public ArrayList<Multa> getAllByIdAgente(Long idAgente) throws SQLException {
+		ArrayList<Multa> multas = new ArrayList<>();
+		String sql = SQL_GETALLBYIDAGENTE;
+		try (Connection conn = ConnectionManager.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
+			pst.setLong(1, idAgente);
+			try (ResultSet rs = pst.executeQuery()) {
+				while (rs.next()) {
 					multas.add(rowMapper(rs));
-					LOG.info("Id de la multa" + multas.toString());
-				} catch (Exception e) {
-					LOG.error("Multa no valida");
 				}
 			}
-
 		} catch (Exception e) {
 			LOG.debug(e);
 		}
+
 		return multas;
-	}
+}
 	
 	public ArrayList<Multa> getAllByIdAgenteDarBaja(Long idAgente) throws SQLException{
 		ArrayList<Multa> multasAgente= new ArrayList<>();
@@ -83,7 +69,7 @@ public class MultaDao {
 					ResultSet rs = pst.executeQuery()
 					){
 					while(rs.next()) {
-						multasAgente.add(rowMapper(rs));
+						multasAgente.add(rowMapperBaja(rs));
 						LOG.info("Id valido");
 					}
 				}
@@ -144,4 +130,15 @@ public class MultaDao {
 		m.setCoche(new Coche(rs.getLong("id_coche"), rs.getString("matricula_coche"), rs.getString("modelo_coche"), rs.getInt("kilometros")));
 		return m;
 	}
+	
+	private Multa rowMapperBaja(ResultSet rs) throws SQLException {
+		Multa m = new Multa();
+		m.setId(rs.getLong("id_multa"));
+		m.setConcepto(rs.getString("concepto"));
+		m.setImporte(rs.getInt("importe"));
+		m.setFecha(rs.getDate("fecha_alta"));
+		m.setFecha_baja(rs.getDate("fecha_baja"));
+		m.setCoche(new Coche(rs.getLong("id_coche"), rs.getString("matricula_coche"), rs.getString("modelo_coche"), rs.getInt("kilometros")));
+		return m;
+}
 }

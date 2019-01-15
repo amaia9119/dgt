@@ -8,6 +8,7 @@ public class Multa {
 	private int importe;
 	private String concepto;
 	private Date fecha;
+	private Date fecha_baja;
 	
 	Coche c = new Coche();
 	
@@ -16,14 +17,23 @@ public class Multa {
 		super();
 	}
 
-	public Multa(Long id, int importe, String concepto, Date fecha) {
+	public Multa(Long id, int importe, String concepto, Date fecha, Date fecha_baja) {
 		this();
 		setId(id);
 		setImporte(importe);
 		setConcepto(concepto);
 		setFecha(fecha);
+		setFecha_baja(fecha_baja);
 		setCoche(c);
 	
+	}
+
+	public Date getFecha_baja() {
+		return fecha_baja;
+	}
+
+	public void setFecha_baja(Date fecha_baja) {
+		this.fecha_baja = fecha_baja;
 	}
 
 	public Coche getCoche() {
@@ -68,11 +78,11 @@ public class Multa {
 
 	@Override
 	public String toString() {
-		return "Multa [id=" + id + ", importe=" + importe + ", concepto=" + concepto + ", fecha=" + fecha + ", c=" + c
-				+ "]";
+		return "Multa [id=" + id + ", importe=" + importe + ", concepto=" + concepto + ", fecha=" + fecha
+				+ ", fecha_baja=" + fecha_baja + ", c=" + c + "]";
 	}
 
-	
+
 
 	
 
