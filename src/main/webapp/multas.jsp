@@ -17,7 +17,7 @@
 				<th scope="row">${m.fecha}</th>
 				<td>${m.coche.matricula}</td>
 				<td>${m.importe}</td>
-				<td><span class="icon-bin"></span></td>
+				<td><a href="${pageContext.request.contextPath}/eliminar?id=${m.id}"><span class="icon-bin"></span></a></td>
 			</tr>
 		</c:forEach>
 	</tbody>

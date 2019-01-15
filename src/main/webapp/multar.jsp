@@ -19,6 +19,7 @@
 			<textarea class="form-control" name="concepto" placeholder="Concepto" rows="3"></textarea>
 		</div>
 	</div>
+	<input type="hidden" name="op" value="4">
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
