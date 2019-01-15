@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import com.ipartek.formacion.modelo.pojo.Coche;
 
 public class CocheDao {
-
+	private final static Logger LOG = Logger.getLogger(CocheDao.class);
 	private final static String SQL_GETBYMATRICULA = "SELECT c.id, c.matricula, c.modelo, c.km FROM coche AS c WHERE c.matricula =?;";
 	private final static String SQL_GETBYID="SELECT c.id, c.matricula, c.modelo, c.km FROM coche AS c WHERE c.id =?;";
 	// c.km FROM coche AS c WHERE c.id =?;";
@@ -41,13 +43,12 @@ public class CocheDao {
 								rs.getInt("km"));
 
 					} catch (Exception e) {
-						System.out.println("matricula no valida");
-						e.printStackTrace();
+						LOG.error("matricula no valida");
 					}
 				} // while
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOG.debug(e);
 			}
 			return c;
 		}
@@ -66,13 +67,12 @@ public class CocheDao {
 									rs.getInt("km"));
 
 						} catch (Exception e) {
-							System.out.println("matricula no valida");
-							e.printStackTrace();
+							LOG.error("Id no valido");
 						}
 					} // while
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOG.debug(e);
 				}
 				return c;
 			}

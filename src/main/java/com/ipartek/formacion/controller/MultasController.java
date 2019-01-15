@@ -2,7 +2,6 @@ package com.ipartek.formacion.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Set;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.ConstraintViolation;
 
 import org.apache.log4j.Logger;
 
@@ -28,10 +26,8 @@ import com.ipartek.formacion.modelo.pojo.Multa;
  */
 @WebServlet("/multas")
 public class MultasController extends HttpServlet {
-	private static final long serialVersionUID = 1L;		
-	
-	private static MultaDao dao = null;
-	
+	private static final long serialVersionUID = 1L;
+	private final static Logger LOG = Logger.getLogger(CocheDao.class);
 	private MultaDao daoMulta;
 	private CocheDao daoCoche;
 	//private String id;
@@ -93,5 +89,5 @@ public class MultasController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
