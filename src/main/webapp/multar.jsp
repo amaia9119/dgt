@@ -3,7 +3,6 @@
 <%@ include file="../includes/mensajes.jsp"  %>
 
 <form action="multas" method="post">
-	<div class="row">
 			<input type="hidden" class="form-control" name="coche_id" value="${coche.id}">
 			<input type="hidden" class="form-control" name="id_agente" value="${sessionScope.ag.id}">
 		<div class="col">
@@ -18,9 +17,7 @@
 		<div class="col">
 			<textarea class="form-control" name="concepto" placeholder="Concepto" rows="3"></textarea>
 		</div>
-	</div>
-	<input type="hidden" name="op" value="4">
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<button type="submit" class="btn btn-dark">Crear multa</button>
 </form>
 
 <%@ include file="../includes/footer.jsp"  %> 

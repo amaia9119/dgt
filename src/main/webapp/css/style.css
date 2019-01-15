@@ -44,3 +44,17 @@ span.icon-arrow-left2 {
 div#DataTables_Table_0_wrapper {
     width: 100%;
 }
+form {
+    width: 100%;
+}
+form button.btn {
+    width: 100%;
+    margin: 20px 0;
+}
+.alert {
+    width: 100%;
+}
+form .col {
+    padding: 0;
+    margin: 10px 0;
+}

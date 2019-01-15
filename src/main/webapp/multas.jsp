@@ -2,7 +2,7 @@
 <%@ include file="../includes/navbar.jsp"  %>
 <%@ include file="../includes/mensajes.jsp"  %>
 
-<table  class="table table-striped">
+<table  class="table table-striped responsive no-wrap">
 	<thead>
 		<tr>
 			<th scope="col">Fecha</th>

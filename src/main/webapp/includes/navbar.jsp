@@ -18,6 +18,9 @@
 	      <li class="nav-item">
 	        <a class="nav-link" href="${pageContext.request.contextPath}/multas">Ver multas</a>
 	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="${pageContext.request.contextPath}/listar">Multas dadas de baja</a>
+	      </li>
 	    </ul>
     </div>
   </div>
