@@ -46,7 +46,8 @@ public class EliminarController extends HttpServlet {
 		Long idM = Long.parseLong(request.getParameter("id"));
 		try {
 			daoMulta.delete(idM);
-			request.getRequestDispatcher("multbaja.jsp").forward(request, response);
+			request.setAttribute("multas", daoMulta.getAll());
+			request.getRequestDispatcher("multas.jsp").forward(request, response);
 		} catch (SQLException e) {
 			LOG.error(e);
 		}
