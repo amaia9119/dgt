@@ -67,7 +67,7 @@ public class CocheDao {
 									rs.getInt("km"));
 
 						} catch (Exception e) {
-							LOG.error("matricula no valida");
+							LOG.error("Id no valido");
 						}
 					} // while
 

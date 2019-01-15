@@ -59,9 +59,9 @@ public class MultaDao {
 			while (rs.next()) {
 				try {					
 					multas.add(rowMapper(rs));
-					LOG.info("multa valida");
+					LOG.info("Id de la multa" + multas.toString());
 				} catch (Exception e) {
-					LOG.error("multa no valida");
+					LOG.error("Multa no valida");
 				}
 			}
 
@@ -84,7 +84,7 @@ public class MultaDao {
 					){
 					while(rs.next()) {
 						multasAgente.add(rowMapper(rs));
-						
+						LOG.info("Id valido");
 					}
 				}
 		}catch (Exception e) {
