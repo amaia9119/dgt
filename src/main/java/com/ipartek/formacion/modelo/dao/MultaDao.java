@@ -2,7 +2,6 @@ package com.ipartek.formacion.modelo.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -26,8 +25,8 @@ public class MultaDao {
 
 	//private static final String SQL_GETALLBYIDAGENTE_FECHA_BAJA = "{call multa_getAllFechaBaja(?)}";
 
-	private final static String SQL_GETALLBYIDAGENTE = "SELECT m.id AS id_multa, importe, concepto, fecha_alta,id_agente,id_coche, c.matricula, c.modelo, c.km"
-			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND fecha_baja IS NULL ORDER BY fecha_alta DESC";
+//	private final static String SQL_GETALLBYIDAGENTE = "SELECT m.id AS id_multa, importe, concepto, fecha_alta,id_agente,id_coche, c.matricula, c.modelo, c.km"
+//			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND fecha_baja IS NULL ORDER BY fecha_alta DESC";
 
 	private static final String SQL_INSERT = "{call multa_insert(?, ?, ?, ?)}";
 
@@ -56,43 +55,38 @@ public class MultaDao {
 	public ArrayList<Multa> getAll( int opcion) {
 
 		ArrayList<Multa> multas = new ArrayList<Multa>();
-
-		try (Connection conn = ConnectionManager.getConnection();
-				CallableStatement cs = conn.prepareCall(SQL_GETALL);
-				ResultSet rs = cs.executeQuery()) {
-				
-				cs.setInt(1, opcion);
-			while (rs.next()) {
-				try {
-					multas.add(rowMapper(rs));
-					LOG.info("Id de la multa" + multas.toString());
-				} catch (Exception e) {
-					LOG.error("Multa no valida");
-				}
-			}
-
-		} catch (Exception e) {
-			LOG.debug(e);
-		}
-		return multas;
-	}
-
-	public ArrayList<Multa> getAllByIdAgente(Long idAgente) throws SQLException {
-		ArrayList<Multa> multas = new ArrayList<>();
-		String sql = SQL_GETALLBYIDAGENTE;
-		try (Connection conn = ConnectionManager.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
-			pst.setLong(1, idAgente);
-			try (ResultSet rs = pst.executeQuery()) {
+		String sql = SQL_GETALL;
+		try (Connection conn = ConnectionManager.getConnection(); CallableStatement cs = conn.prepareCall(sql);) {
+			
+			cs.setInt(1, opcion);
+			try (ResultSet rs = cs.executeQuery()) {
 				while (rs.next()) {
 					multas.add(rowMapper(rs));
+					LOG.info("Id valido");
 				}
 			}
 		} catch (Exception e) {
 			LOG.debug(e);
 		}
-
 		return multas;
 	}
+
+//	public ArrayList<Multa> getAllByIdAgente(Long idAgente) throws SQLException {
+//		ArrayList<Multa> multas = new ArrayList<>();
+//		String sql = SQL_GETALLBYIDAGENTE;
+//		try (Connection conn = ConnectionManager.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
+//			pst.setLong(1, idAgente);
+//			try (ResultSet rs = pst.executeQuery()) {
+//				while (rs.next()) {
+//					multas.add(rowMapper(rs));
+//				}
+//			}
+//		} catch (Exception e) {
+//			LOG.debug(e);
+//		}
+//
+//		return multas;
+//	}
 	
 	/**
 	 * 
