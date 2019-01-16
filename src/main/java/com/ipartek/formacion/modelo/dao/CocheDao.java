@@ -1,7 +1,7 @@
 package com.ipartek.formacion.modelo.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,8 +11,8 @@ import com.ipartek.formacion.modelo.pojo.Coche;
 
 public class CocheDao {
 	private final static Logger LOG = Logger.getLogger(CocheDao.class);
-	private final static String SQL_GETBYMATRICULA = "SELECT c.id, c.matricula, c.modelo, c.km FROM coche AS c WHERE c.matricula =?;";
-	private final static String SQL_GETBYID="SELECT c.id, c.matricula, c.modelo, c.km FROM coche AS c WHERE c.id =?;";
+	private final static String SQL_GETBYMATRICULA = "{call coche_getByMatricula()}";
+	private final static String SQL_GETBYID="{call coche_getById()}";
 	// c.km FROM coche AS c WHERE c.id =?;";
 
 	private static CocheDao INSTANCE = null;
@@ -33,9 +33,9 @@ public class CocheDao {
 	public Coche getByMatricula(String matricula) throws SQLException {
 		Coche c = null;
 		try (Connection conn = ConnectionManager.getConnection();
-				PreparedStatement pst = conn.prepareStatement(SQL_GETBYMATRICULA);) {
-			pst.setString(1, matricula);
-			try (ResultSet rs = pst.executeQuery()) {
+				CallableStatement cs = conn.prepareCall(SQL_GETBYMATRICULA);) {
+			cs.setString(1, matricula);
+			try (ResultSet rs = cs.executeQuery()) {
 
 				while (rs.next()) {
 					try {
@@ -57,9 +57,9 @@ public class CocheDao {
 		public Coche getById(Long id) throws SQLException {
 			Coche c = null;
 			try (Connection conn = ConnectionManager.getConnection();
-					PreparedStatement pst = conn.prepareStatement(SQL_GETBYID);) {
-				pst.setLong(1, id);
-				try (ResultSet rs = pst.executeQuery()) {
+					CallableStatement cs = conn.prepareCall(SQL_GETBYID);) {
+				cs.setLong(1, id);
+				try (ResultSet rs = cs.executeQuery()) {
 
 					while (rs.next()) {
 						try {

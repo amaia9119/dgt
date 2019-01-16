@@ -1,9 +1,11 @@
 package com.ipartek.formacion.modelo.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -16,43 +18,16 @@ import com.ipartek.formacion.modelo.pojo.Multa;
 public class MultaDao {
 	private final static Logger LOG = Logger.getLogger(MultaDao.class);
 	private static MultaDao INSTANCE = null;
-	private static final String SQL_GETALL  = "SELECT "
-			+ "multa.id AS 'id',"
-			+ "coche.id AS 'id_coche',"
-			+ "coche.modelo AS 'modelo_coche',"
-			+ "coche.matricula AS 'matricula_coche',"
-			+ "coche.km AS 'kilometros',"
-			+ "multa.importe AS 'importe_de_multa',"
-			+ "multa.concepto AS 'concepto',"
-			+ "multa.fecha AS 'fecha',"
-			+ "multa.fecha_baja AS 'fecha_baja'"
-			+ "FROM multa INNER JOIN agente ON multa.id_agente=agente.id "
-						+ "INNER JOIN coche ON multa.id_coche=coche.id	"
-						+ "WHERE fecha_baja IS NULL;";
+	private static final String SQL_GETALL  = "{call multa_getAll()}";
 	
-	private static final String SQL_GETALLBYIDAGENTE_FECHA_BAJA  = "SELECT "
-			+ "multa.id AS 'id',"
-			+ "coche.id AS 'id_coche',"
-			+ "coche.modelo AS 'modelo_coche',"
-			+ "coche.matricula AS 'matricula_coche',"
-			+ "coche.km AS 'kilometros',"
-			+ "multa.importe AS 'importe_de_multa',"
-			+ "multa.concepto AS 'concepto',"
-			+ "multa.fecha AS 'fecha',"
-			+ "multa.fecha_baja AS 'fecha_baja'"
-			+ "FROM multa INNER JOIN agente ON multa.id_agente=agente.id "
-						+ "INNER JOIN coche ON multa.id_coche=coche.id	"
-						+ "WHERE id_agente=? " 
-						+ "AND fecha_baja IS NOT NULL;";
+	private static final String SQL_GETALLBYIDAGENTE_FECHA_BAJA  = "{call multa_getAllFechaBaja(?)}";
 	
 	private final static String SQL_GETALLBYIDAGENTE = "SELECT m.id AS id_multa, importe, concepto, fecha_alta,id_agente,id_coche, c.matricula, c.modelo, c.km"
 			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND fecha_baja IS NULL ORDER BY fecha_alta DESC";
 	
-	private static final String SQL_INSERT = "INSERT INTO multa (importe, concepto,id_coche,id_agente) VALUES (?,?,?,?);";
-//	private final static String SQL_GETALLBYIDAGENTE_FECHA_BAJA="SELECT multa.id AS id_multa, multa.importe AS importe_multa, multa.concepto AS concepto_multa,multa.fecha_alta AS fecha_alta_multa,multa.fecha_baja AS fecha_baja_multa,multa.id_agente AS id_agente_multa,multa.id_coche AS id_coche_multa, c.matricula AS matricula_coche, c.modelo AS modelo_coche, c.km AS kilometros"
-//			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND m.fecha_baja IS NOT NULL "
-//			+ "ORDER BY fecha_alta DESC ";
-	private final static String SQL_UPDATE_FECHA_BAJA="UPDATE multa SET fecha_baja=CURRENT_TIMESTAMP() WHERE id =?";
+	private static final String SQL_INSERT = "{call multa_insert(?, ?, ?, ?)}";
+
+	private final static String SQL_UPDATE_FECHA_BAJA="{call multa_update(?)}";
 	
 	// constructor privado, solo acceso por getInstance()
 	private MultaDao() {
@@ -72,8 +47,8 @@ public class MultaDao {
 		ArrayList<Multa> multas = new ArrayList<Multa>();
 		
 		try (Connection conn = ConnectionManager.getConnection();
-				PreparedStatement pst = conn.prepareStatement(SQL_GETALL);
-				ResultSet rs = pst.executeQuery()) {
+				CallableStatement cs = conn.prepareCall(SQL_GETALL);
+				ResultSet rs = cs.executeQuery()) {
 
 			while (rs.next()) {
 				try {					
@@ -113,11 +88,11 @@ public class MultaDao {
 		String sql = SQL_GETALLBYIDAGENTE_FECHA_BAJA;
 		try(
 			Connection conn = ConnectionManager.getConnection();
-			PreparedStatement pst = conn.prepareStatement(sql);	
+			CallableStatement cs = conn.prepareCall(sql);	
 			){
-			pst.setLong(1, idAgente);
+			cs.setLong(1, idAgente);
 			try(
-					ResultSet rs = pst.executeQuery()
+					ResultSet rs = cs.executeQuery()
 					){
 					while(rs.next()) {
 						multasAgente.add(rowMapperBaja(rs));
@@ -137,13 +112,17 @@ public class MultaDao {
 		boolean resul = false;
 	
 		try (Connection conn = ConnectionManager.getConnection(); 
-				PreparedStatement pst = conn.prepareStatement(SQL_INSERT);) {
+				CallableStatement cs = conn.prepareCall(SQL_INSERT);) {
 
-			pst.setInt(1, m.getImporte() );
-			pst.setString(2, m.getConcepto());
-			pst.setLong(3, m.getCoche().getId());
-			pst.setLong(4, id_agente);
-			int affectedRows = pst.executeUpdate();
+			cs.setInt(1, m.getImporte() );
+			cs.setString(2, m.getConcepto());
+			cs.setLong(3, m.getCoche().getId());
+			cs.setLong(4, id_agente);
+			
+			cs.registerOutParameter(5,Types.INTEGER);
+			
+			
+			int affectedRows = cs.executeUpdate();
 			if (affectedRows == 1) {
 				resul = true;
 			}
@@ -157,11 +136,11 @@ public class MultaDao {
 		boolean result = false;
 		String sql =SQL_UPDATE_FECHA_BAJA;
 		try(Connection conn = ConnectionManager.getConnection();
-			PreparedStatement pst = conn.prepareStatement(sql);
+			CallableStatement cs = conn.prepareCall(sql);
 			){
-			pst.setLong(1, id);
+			cs.setLong(1, id);
 			
-			int affectedRows = pst.executeUpdate();
+			int affectedRows = cs.executeUpdate();
 			if(affectedRows== 1){
 				result =true;
 			}	

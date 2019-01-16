@@ -1,7 +1,7 @@
 package com.ipartek.formacion.modelo.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import com.ipartek.formacion.modelo.pojo.Agente;
 
 public class AgenteDao {
-	private final static String SQL_GETBYID = "SELECT id, nombre, placa, id_departamento FROM agente WHERE id=?";
+	private final static String SQL_GETBYID = "{call agente_getById()}";
 
 	private final static Logger LOG = Logger.getLogger(AgenteDao.class);
 	private static AgenteDao INSTANCE = null;
@@ -38,9 +38,9 @@ public class AgenteDao {
 		Agente a = new Agente();
 
 		String sql = SQL_GETBYID;
-		try (Connection conn = ConnectionManager.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
-			pst.setLong(1, id);
-			try (ResultSet rs = pst.executeQuery();) {
+		try (Connection conn = ConnectionManager.getConnection(); CallableStatement cs = conn.prepareCall(sql);) {
+			cs.setLong(1, id);
+			try (ResultSet rs = cs.executeQuery();) {
 				while (rs.next()) {
 					a = rowMapper(rs);
 				}
