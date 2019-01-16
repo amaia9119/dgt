@@ -13,22 +13,26 @@ import org.apache.log4j.Logger;
 import com.ipartek.formacion.modelo.pojo.Coche;
 import com.ipartek.formacion.modelo.pojo.Multa;
 
-
-
 public class MultaDao {
+	
 	private final static Logger LOG = Logger.getLogger(MultaDao.class);
+	
+	
+	public final static int ACTIVAS = 1;
+	public final static int ANULADAS = 0;
+	
 	private static MultaDao INSTANCE = null;
-	private static final String SQL_GETALL  = "{call multa_getAll()}";
-	
-	private static final String SQL_GETALLBYIDAGENTE_FECHA_BAJA  = "{call multa_getAllFechaBaja(?)}";
-	
+	private static final String SQL_GETALL = "{call multa_getAll(?)}";
+
+	//private static final String SQL_GETALLBYIDAGENTE_FECHA_BAJA = "{call multa_getAllFechaBaja(?)}";
+
 	private final static String SQL_GETALLBYIDAGENTE = "SELECT m.id AS id_multa, importe, concepto, fecha_alta,id_agente,id_coche, c.matricula, c.modelo, c.km"
 			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND fecha_baja IS NULL ORDER BY fecha_alta DESC";
-	
+
 	private static final String SQL_INSERT = "{call multa_insert(?, ?, ?, ?)}";
 
-	private final static String SQL_UPDATE_FECHA_BAJA="{call multa_update(?)}";
-	
+	private final static String SQL_UPDATE_FECHA_BAJA = "{call multa_update(?)}";
+
 	// constructor privado, solo acceso por getInstance()
 	private MultaDao() {
 		super();
@@ -41,17 +45,25 @@ public class MultaDao {
 		}
 		return INSTANCE;
 	}
-	
-	public ArrayList<Multa> getAll() {
+
+	/**
+	 * 
+	 * @param opcion usar constantes para multas activas y anuladas
+	 * @see ACTIVAS
+	 * @see ANULADAS
+	 * @return
+	 */
+	public ArrayList<Multa> getAll( int opcion) {
 
 		ArrayList<Multa> multas = new ArrayList<Multa>();
-		
+
 		try (Connection conn = ConnectionManager.getConnection();
 				CallableStatement cs = conn.prepareCall(SQL_GETALL);
 				ResultSet rs = cs.executeQuery()) {
-
+				
+				cs.setInt(1, opcion);
 			while (rs.next()) {
-				try {					
+				try {
 					multas.add(rowMapper(rs));
 					LOG.info("Id de la multa" + multas.toString());
 				} catch (Exception e) {
@@ -64,7 +76,6 @@ public class MultaDao {
 		}
 		return multas;
 	}
-	
 
 	public ArrayList<Multa> getAllByIdAgente(Long idAgente) throws SQLException {
 		ArrayList<Multa> multas = new ArrayList<>();
@@ -81,47 +92,48 @@ public class MultaDao {
 		}
 
 		return multas;
-}
+	}
 	
-	public ArrayList<Multa> getAllByIdAgenteDarBaja(Long idAgente) throws SQLException{
-		ArrayList<Multa> multasAgente= new ArrayList<>();
-		String sql = SQL_GETALLBYIDAGENTE_FECHA_BAJA;
-		try(
-			Connection conn = ConnectionManager.getConnection();
-			CallableStatement cs = conn.prepareCall(sql);	
-			){
+	/**
+	 * 
+	 * @param opcion usar constantes para multas activas y anuladas
+	 * @see ACTIVAS
+	 * @see ANULADAS
+	 * @return
+	 */
+	public ArrayList<Multa> getAllByIdAgenteDarBaja(Long idAgente, int opcion) throws SQLException {
+		ArrayList<Multa> multasAgente = new ArrayList<>();
+		String sql = SQL_GETALL;
+		try (Connection conn = ConnectionManager.getConnection(); CallableStatement cs = conn.prepareCall(sql);) {
 			cs.setLong(1, idAgente);
-			try(
-					ResultSet rs = cs.executeQuery()
-					){
-					while(rs.next()) {
-						multasAgente.add(rowMapperBaja(rs));
-						LOG.info("Id valido");
-					}
+			cs.setInt(2, opcion);
+			try (ResultSet rs = cs.executeQuery()) {
+				while (rs.next()) {
+					multasAgente.add(rowMapperBaja(rs));
+					LOG.info("Id valido");
 				}
-		}catch (Exception e) {
+			}
+		} catch (Exception e) {
 			LOG.debug(e);
 		}
-		
+
 		return multasAgente;
-}
-	
-	
+	}
+
 	public boolean insert(Multa m, Long id_agente) throws SQLException {
 
 		boolean resul = false;
-	
-		try (Connection conn = ConnectionManager.getConnection(); 
+
+		try (Connection conn = ConnectionManager.getConnection();
 				CallableStatement cs = conn.prepareCall(SQL_INSERT);) {
 
-			cs.setInt(1, m.getImporte() );
+			cs.setInt(1, m.getImporte());
 			cs.setString(2, m.getConcepto());
 			cs.setLong(3, m.getCoche().getId());
 			cs.setLong(4, id_agente);
-			
-			cs.registerOutParameter(5,Types.INTEGER);
-			
-			
+
+			cs.registerOutParameter(5, Types.INTEGER);
+
 			int affectedRows = cs.executeUpdate();
 			if (affectedRows == 1) {
 				resul = true;
@@ -131,36 +143,33 @@ public class MultaDao {
 		return resul;
 
 	}
-	
-	public boolean delete(Long id) throws SQLException{
+
+	public boolean delete(Long id) throws SQLException {
 		boolean result = false;
-		String sql =SQL_UPDATE_FECHA_BAJA;
-		try(Connection conn = ConnectionManager.getConnection();
-			CallableStatement cs = conn.prepareCall(sql);
-			){
+		String sql = SQL_UPDATE_FECHA_BAJA;
+		try (Connection conn = ConnectionManager.getConnection(); CallableStatement cs = conn.prepareCall(sql);) {
 			cs.setLong(1, id);
-			
+
 			int affectedRows = cs.executeUpdate();
-			if(affectedRows== 1){
-				result =true;
-			}	
+			if (affectedRows == 1) {
+				result = true;
+			}
 		}
-		
-		
-		
+
 		return result;
-}
-	
+	}
+
 	private Multa rowMapper(ResultSet rs) throws SQLException {
 		Multa m = new Multa();
-		m.setId( rs.getLong("id"));
+		m.setId(rs.getLong("id"));
 		m.setImporte(rs.getInt("importe_de_multa"));
 		m.setConcepto(rs.getString("concepto"));
 		m.setFecha(rs.getDate("fecha"));
-		m.setCoche(new Coche(rs.getLong("id_coche"), rs.getString("matricula_coche"), rs.getString("modelo_coche"), rs.getInt("kilometros")));
+		m.setCoche(new Coche(rs.getLong("id_coche"), rs.getString("matricula_coche"), rs.getString("modelo_coche"),
+				rs.getInt("kilometros")));
 		return m;
 	}
-	
+
 	private Multa rowMapperBaja(ResultSet rs) throws SQLException {
 		Multa m = new Multa();
 		m.setId(rs.getLong("id"));
@@ -168,7 +177,8 @@ public class MultaDao {
 		m.setImporte(rs.getInt("importe_de_multa"));
 		m.setFecha(rs.getDate("fecha"));
 		m.setFecha_baja(rs.getDate("fecha_baja"));
-		m.setCoche(new Coche(rs.getLong("id_coche"), rs.getString("matricula_coche"), rs.getString("modelo_coche"), rs.getInt("kilometros")));
+		m.setCoche(new Coche(rs.getLong("id_coche"), rs.getString("matricula_coche"), rs.getString("modelo_coche"),
+				rs.getInt("kilometros")));
 		return m;
-}
+	}
 }

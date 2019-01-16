@@ -45,7 +45,7 @@ public class ListarBajaController extends HttpServlet {
 		HttpSession session = request.getSession();
 		Agente ag = (Agente) session.getAttribute("agente");
 		try {
-			request.setAttribute("multbaja", daoMulta.getAllByIdAgenteDarBaja(ag.getId()));
+			request.setAttribute("multbaja", daoMulta.getAllByIdAgenteDarBaja(ag.getId(), MultaDao.ANULADAS));
 			request.getRequestDispatcher("multbaja.jsp").forward(request, response);
 		} catch (SQLException e) {
 			LOG.error(e);

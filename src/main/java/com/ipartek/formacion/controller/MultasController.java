@@ -52,7 +52,7 @@ public class MultasController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-			request.setAttribute("multas", daoMulta.getAll());
+			request.setAttribute("multas", daoMulta.getAll( MultaDao.ACTIVAS));
 			request.getRequestDispatcher("multas.jsp").forward(request, response);
 		}
 
