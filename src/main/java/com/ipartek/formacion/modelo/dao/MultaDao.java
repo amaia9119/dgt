@@ -16,26 +16,42 @@ import com.ipartek.formacion.modelo.pojo.Multa;
 public class MultaDao {
 	private final static Logger LOG = Logger.getLogger(MultaDao.class);
 	private static MultaDao INSTANCE = null;
-	private static final String SQL_GETALL  = "select\r\n"
-			+ "multa.id as 'id',"
-			+ "coche.id as 'id_coche',\r\n"+ 
-			"coche.modelo as 'modelo_coche',\r\n"
-			+ "coche.matricula as 'matricula_coche',\r\n"
-			+ "coche.km as 'kilometros',\r\n" + 
-			"multa.importe as 'importe_de_multa',\r\n" + 
-			"multa.concepto as 'concepto',\r\n" + 
-			"multa.fecha as 'fecha'\r\n" + 
-			"from multa\r\n" + 
-			"inner join agente on multa.id_agente=agente.id\r\n" + 
-			"inner join coche on multa.id_coche=coche.id ";
+	private static final String SQL_GETALL  = "SELECT "
+			+ "multa.id AS 'id',"
+			+ "coche.id AS 'id_coche',"
+			+ "coche.modelo AS 'modelo_coche',"
+			+ "coche.matricula AS 'matricula_coche',"
+			+ "coche.km AS 'kilometros',"
+			+ "multa.importe AS 'importe_de_multa',"
+			+ "multa.concepto AS 'concepto',"
+			+ "multa.fecha AS 'fecha',"
+			+ "multa.fecha_baja AS 'fecha_baja'"
+			+ "FROM multa INNER JOIN agente ON multa.id_agente=agente.id "
+						+ "INNER JOIN coche ON multa.id_coche=coche.id	"
+						+ "WHERE fecha_baja IS NULL;";
 	
-	private final static String SQL_GETALLBYIDAGENTE = "SELECT m.id AS id_multa, importe, concepto, fecha_alta ,id_agente,id_coche, c.matricula, c.modelo, c.km"
+	private static final String SQL_GETALLBYIDAGENTE_FECHA_BAJA  = "SELECT "
+			+ "multa.id AS 'id',"
+			+ "coche.id AS 'id_coche',"
+			+ "coche.modelo AS 'modelo_coche',"
+			+ "coche.matricula AS 'matricula_coche',"
+			+ "coche.km AS 'kilometros',"
+			+ "multa.importe AS 'importe_de_multa',"
+			+ "multa.concepto AS 'concepto',"
+			+ "multa.fecha AS 'fecha',"
+			+ "multa.fecha_baja AS 'fecha_baja'"
+			+ "FROM multa INNER JOIN agente ON multa.id_agente=agente.id "
+						+ "INNER JOIN coche ON multa.id_coche=coche.id	"
+						+ "WHERE id_agente=? " 
+						+ "AND fecha_baja IS NOT NULL;";
+	
+	private final static String SQL_GETALLBYIDAGENTE = "SELECT m.id AS id_multa, importe, concepto, fecha_alta,id_agente,id_coche, c.matricula, c.modelo, c.km"
 			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND fecha_baja IS NULL ORDER BY fecha_alta DESC";
 	
 	private static final String SQL_INSERT = "INSERT INTO multa (importe, concepto,id_coche,id_agente) VALUES (?,?,?,?);";
-	private final static String SQL_GETALLBYIDAGENTE_FECHA_BAJA="SELECT m.id AS id_multa, importe, concepto, fecha_alta ,id_agente,id_coche, c.matricula, c.modelo, c.km"
-			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND m.fecha_baja IS NOT NULL "
-			+ "ORDER BY fecha_alta DESC ";
+//	private final static String SQL_GETALLBYIDAGENTE_FECHA_BAJA="SELECT multa.id AS id_multa, multa.importe AS importe_multa, multa.concepto AS concepto_multa,multa.fecha_alta AS fecha_alta_multa,multa.fecha_baja AS fecha_baja_multa,multa.id_agente AS id_agente_multa,multa.id_coche AS id_coche_multa, c.matricula AS matricula_coche, c.modelo AS modelo_coche, c.km AS kilometros"
+//			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND m.fecha_baja IS NOT NULL "
+//			+ "ORDER BY fecha_alta DESC ";
 	private final static String SQL_UPDATE_FECHA_BAJA="UPDATE multa SET fecha_baja=CURRENT_TIMESTAMP() WHERE id =?";
 	
 	// constructor privado, solo acceso por getInstance()
@@ -168,10 +184,10 @@ public class MultaDao {
 	
 	private Multa rowMapperBaja(ResultSet rs) throws SQLException {
 		Multa m = new Multa();
-		m.setId(rs.getLong("id_multa"));
+		m.setId(rs.getLong("id"));
 		m.setConcepto(rs.getString("concepto"));
-		m.setImporte(rs.getInt("importe"));
-		m.setFecha(rs.getDate("fecha_alta"));
+		m.setImporte(rs.getInt("importe_de_multa"));
+		m.setFecha(rs.getDate("fecha"));
 		m.setFecha_baja(rs.getDate("fecha_baja"));
 		m.setCoche(new Coche(rs.getLong("id_coche"), rs.getString("matricula_coche"), rs.getString("modelo_coche"), rs.getInt("kilometros")));
 		return m;
