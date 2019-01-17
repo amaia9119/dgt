@@ -5,17 +5,21 @@
 <table  class="table table-striped responsive no-wrap">
 	<thead>
 		<tr>
+			<th scope="col">Fecha alta</th>
+			<th scope="col">Fecha baja</th>
 			<th scope="col">Matrícula</th>
-			<th scope="col">Fecha de baja</th>
 			<th scope="col">Importe</th>
+			<th scope="col">Concepto</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach items="${multbaja}" var="mub">
 			<tr>
-				<th scope="row">${mub.coche.matricula}</th>
+				<td scope="row">${mub.fecha_alta}</td>
 				<td>${mub.fecha_baja}</td>
+				<th>${mub.coche.matricula}</th>
 				<td>${mub.importe}</td>
+				<td>${mub.concepto}</td>
 			</tr>
 		</c:forEach>
 	</tbody>
