@@ -6,16 +6,27 @@
 			<input type="hidden" class="form-control" name="coche_id" value="${coche.id}">
 			<input type="hidden" class="form-control" name="id_agente" value="${sessionScope.ag.id}">
 		<div class="col">
+			<label>Matrícula:</label>
 			<input type="text" class="form-control" placeholder="${coche.matricula}" readonly>
 		</div>
 		<div class="col">
+			<label>Modelo:</label>
+			<input type="text" class="form-control" placeholder="${coche.modelo}" readonly>
+		</div>
+		<div class="col">
+			<label>Distancia recorrida:</label>
+			<input type="text" class="form-control" placeholder="${coche.km}km" readonly>
+		</div>
+		<div class="col">
+			<label>Importe:</label>
 			<input type="number" class="form-control" name="importe" placeholder="Importe">
 			<!--<div class="input-group-prepend">
 			<div class="input-group-text">€</div>
 			</div>-->
 		</div>
 		<div class="col">
-			<textarea class="form-control" name="concepto" placeholder="Concepto" rows="3"></textarea>
+			<label for="concepto">Concepto  <span id="contadorLabel">(0/250)</span></label>
+			<textarea id="concepto" class="form-control" name="concepto" placeholder="Concepto" rows="3"></textarea>
 		</div>
 	<button type="submit" class="btn btn-dark">Crear multa</button>
 </form>

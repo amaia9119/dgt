@@ -24,6 +24,9 @@ nav > span {
 main {
     margin-top: 40px;
 }
+.row {
+    margin: 0;
+}
 .shadow-sm a{
 	min-height: 150px;
 }
@@ -58,3 +61,11 @@ form .col {
     padding: 0;
     margin: 10px 0;
 }
+.anular{
+	border: none;
+    background: transparent;
+}
+/*
+form label, form input {
+    width: 50% !important;
+}*/
