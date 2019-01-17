@@ -42,7 +42,7 @@ public void destroy() {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("matricula.jsp").forward(request, response);
+		request.getRequestDispatcher("privado/matricula.jsp").forward(request, response);
 	}
 
 	/**
@@ -64,14 +64,14 @@ public void destroy() {
 			
 			if (c != null) {
 				request.setAttribute("coche", c);
-				request.getRequestDispatcher("multar.jsp").forward(request, response);
+				request.getRequestDispatcher("privado/multar.jsp").forward(request, response);
 			} else {
 				request.setAttribute("mensaje", new Alerta(Alerta.TIPO_DANGER, "matrícula no válida"));
-				request.getRequestDispatcher("matricula.jsp").forward(request, response);
+				request.getRequestDispatcher("privado/matricula.jsp").forward(request, response);
 			}
 		}else {
 			request.setAttribute("mensaje", new Alerta(Alerta.TIPO_DANGER, "matrícula no válida"));
-			request.getRequestDispatcher("matricula.jsp").forward(request, response);
+			request.getRequestDispatcher("privado/matricula.jsp").forward(request, response);
 		}
 		
 	}
