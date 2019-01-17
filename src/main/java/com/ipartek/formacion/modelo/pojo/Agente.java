@@ -8,6 +8,8 @@ public class Agente {
 	private String nombre;
 	private Long placa;
 	ArrayList<Multa> multas = new ArrayList<Multa>();
+	private Double importeAnual;
+	private Double importeMensual;
 	
 	public Agente() {
 		super();
@@ -22,6 +24,24 @@ public class Agente {
 		setNombre(nombre);
 		setPlaca(placa);
 		setMulta(multas);
+		setImporteAnual(importeAnual);
+		setImporteMensual(importeMensual);
+	}
+
+	public Double getImporteAnual() {
+		return importeAnual;
+	}
+
+	public void setImporteAnual(Double importeAnual) {
+		this.importeAnual = importeAnual;
+	}
+
+	public Double getImporteMensual() {
+		return importeMensual;
+	}
+
+	public void setImporteMensual(Double importeMensual) {
+		this.importeMensual = importeMensual;
 	}
 
 	public ArrayList<Multa> getMultas() {
@@ -58,8 +78,8 @@ public class Agente {
 
 	@Override
 	public String toString() {
-		return "Agente [id=" + id + ", nombre=" + nombre + ", placa=" + placa + ", multas=" + multas + "]";
+		return "Agente [id=" + id + ", nombre=" + nombre + ", placa=" + placa + ", multas=" + multas + ", importeAnual="
+				+ importeAnual + ", importeMensual=" + importeMensual + "]";
 	}
-	
-	
+
 }
