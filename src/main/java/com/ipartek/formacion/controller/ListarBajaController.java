@@ -42,10 +42,10 @@ public class ListarBajaController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Agente ag = (Agente) session.getAttribute("agente");
+//		HttpSession session = request.getSession();
+//		Agente ag = (Agente) session.getAttribute("agente");
 		try {
-			request.setAttribute("multbaja", daoMulta.getAllByIdAgenteDarBaja(ag.getId(), MultaDao.ANULADAS));
+			request.setAttribute("multbaja", daoMulta.getAllByIdAgenteDarBaja(MultaDao.ANULADAS));
 			request.getRequestDispatcher("multbaja.jsp").forward(request, response);
 		} catch (SQLException e) {
 			LOG.error(e);

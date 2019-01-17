@@ -1,7 +1,7 @@
 package com.ipartek.formacion.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

@@ -17,8 +17,8 @@ public class MultaDao {
 	private final static Logger LOG = Logger.getLogger(MultaDao.class);
 	
 	
-	public final static int ACTIVAS = 1;
-	public final static int ANULADAS = 0;
+	public final static int ACTIVAS = 0;
+	public final static int ANULADAS = 1;
 	
 	private static MultaDao INSTANCE = null;
 	private static final String SQL_GETALL = "{call multa_getAll(?)}";
@@ -28,7 +28,7 @@ public class MultaDao {
 //	private final static String SQL_GETALLBYIDAGENTE = "SELECT m.id AS id_multa, importe, concepto, fecha_alta,id_agente,id_coche, c.matricula, c.modelo, c.km"
 //			+ " FROM multa AS m INNER JOIN coche AS c ON m.id_coche= c.id WHERE id_agente=? AND fecha_baja IS NULL ORDER BY fecha_alta DESC";
 
-	private static final String SQL_INSERT = "{call multa_insert(?, ?, ?, ?)}";
+	private static final String SQL_INSERT = "{call multa_insert(?, ?, ?, ?, ?)}";
 
 	private final static String SQL_UPDATE_FECHA_BAJA = "{call multa_update(?)}";
 
@@ -95,12 +95,11 @@ public class MultaDao {
 	 * @see ANULADAS
 	 * @return
 	 */
-	public ArrayList<Multa> getAllByIdAgenteDarBaja(Long idAgente, int opcion) throws SQLException {
+	public ArrayList<Multa> getAllByIdAgenteDarBaja(int opcion) throws SQLException {
 		ArrayList<Multa> multasAgente = new ArrayList<>();
 		String sql = SQL_GETALL;
 		try (Connection conn = ConnectionManager.getConnection(); CallableStatement cs = conn.prepareCall(sql);) {
-			cs.setLong(1, idAgente);
-			cs.setInt(2, opcion);
+			cs.setInt(1, opcion);
 			try (ResultSet rs = cs.executeQuery()) {
 				while (rs.next()) {
 					multasAgente.add(rowMapperBaja(rs));

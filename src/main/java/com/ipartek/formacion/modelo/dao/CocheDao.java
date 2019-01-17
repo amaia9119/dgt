@@ -11,8 +11,8 @@ import com.ipartek.formacion.modelo.pojo.Coche;
 
 public class CocheDao {
 	private final static Logger LOG = Logger.getLogger(CocheDao.class);
-	private final static String SQL_GETBYMATRICULA = "{call coche_getByMatricula()}";
-	private final static String SQL_GETBYID="{call coche_getById()}";
+	private final static String SQL_GETBYMATRICULA = "{call coche_getByMatricula(?)}";
+	private final static String SQL_GETBYID="{call coche_getById(?)}";
 	// c.km FROM coche AS c WHERE c.id =?;";
 
 	private static CocheDao INSTANCE = null;

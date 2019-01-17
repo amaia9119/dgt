@@ -46,7 +46,7 @@ public class EliminarController extends HttpServlet {
 		Long idM = Long.parseLong(request.getParameter("id"));
 		try {
 			daoMulta.delete(idM);
-			request.setAttribute("multas", daoMulta.getAll(MultaDao.ANULADAS));
+			request.setAttribute("multas", daoMulta.getAll(MultaDao.ACTIVAS));
 			request.getRequestDispatcher("multas.jsp").forward(request, response);
 		} catch (SQLException e) {
 			LOG.error(e);
