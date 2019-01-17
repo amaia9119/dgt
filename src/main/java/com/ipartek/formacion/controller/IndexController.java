@@ -31,7 +31,7 @@ public class IndexController extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("agente", ag);
 		
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("privado/index.jsp").forward(request, response);
 		
 		
 	}

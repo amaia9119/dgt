@@ -2,6 +2,7 @@ package com.ipartek.formacion.modelo.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -34,6 +35,28 @@ public class AgenteDao {
 	 * @param id
 	 * @return
 	 */
+	public Agente login(String nombre, String pass) {
+
+		Agente agente = null;
+		String sql = "SELECT id, nombre, pass FROM agente WHERE nombre = ? AND pass = ?;";
+
+		try (Connection conn = ConnectionManager.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
+			pst.setString(1, nombre);
+			pst.setString(2, pass);
+			try (ResultSet rs = pst.executeQuery()) {
+				while (rs.next()) { // hemos encontrado usuario
+					agente = new Agente();
+					agente.setId(rs.getLong("id"));
+					agente.setNombre(rs.getString("nombre"));
+					agente.setPass(rs.getString("pass"));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return agente;
+	}
+	
 	public Agente getByID(Long id) {
 		Agente a = new Agente();
 
@@ -57,6 +80,7 @@ public class AgenteDao {
 		a.setId(rs.getLong("id"));
 		a.setNombre(rs.getString("nombre"));
 		a.setPlaca(rs.getLong("placa"));
+		a.setPass(rs.getString("pass"));
 		
 		return a;
 }

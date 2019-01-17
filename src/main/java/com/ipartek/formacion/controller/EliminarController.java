@@ -47,7 +47,7 @@ public class EliminarController extends HttpServlet {
 		try {
 			daoMulta.delete(idM);
 			request.setAttribute("multas", daoMulta.getAll(MultaDao.ACTIVAS));
-			request.getRequestDispatcher("multas.jsp").forward(request, response);
+			request.getRequestDispatcher("privado/multas.jsp").forward(request, response);
 		} catch (SQLException e) {
 			LOG.error(e);
 		}
