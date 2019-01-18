@@ -1,7 +1,11 @@
 <%@ include file="../includes/header.jsp"  %>
-<%@ include file="../includes/navbar.jsp"  %>
 <%@ include file="../includes/mensajes.jsp"  %>	
-  
+ <main role="main">
+<div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+    
 <form action="login" method="post">
 	<div class="col">
 		<input type="text" class="form-control" name="nombre" placeholder="Introduce tu usuario">

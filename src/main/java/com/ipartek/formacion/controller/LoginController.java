@@ -58,7 +58,6 @@ public class LoginController extends HttpServlet {
 		
 		String nombre = request.getParameter("nombre");
 		String pass = request.getParameter("pass");
-		String view = VIEW_LOGIN;
 		boolean redirect = false;
 		
 		try {
