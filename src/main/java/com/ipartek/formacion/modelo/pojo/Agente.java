@@ -7,8 +7,10 @@ public class Agente {
 	private Long id;
 	private String nombre;
 	private Long placa;
+	private ArrayList<Multa> multas = new ArrayList<Multa>();
 	private String pass;
-	ArrayList<Multa> multas = new ArrayList<Multa>();
+	private Double importeAnual;
+	private Double importeMensual;
 	
 	public Agente() {
 		super();
@@ -23,12 +25,34 @@ public class Agente {
 		setId(id);
 		setNombre(nombre);
 		setPlaca(placa);
-		setMultas(multas);
+		setMulta(multas);
 		setPass(pass);
+		setImporteAnual(importeAnual);
+		setImporteMensual(importeMensual);
+	}
+
+	public Double getImporteAnual() {
+		return importeAnual;
+	}
+
+	public void setImporteAnual(Double importeAnual) {
+		this.importeAnual = importeAnual;
+	}
+
+	public Double getImporteMensual() {
+		return importeMensual;
+	}
+
+	public void setImporteMensual(Double importeMensual) {
+		this.importeMensual = importeMensual;
 	}
 
 	public ArrayList<Multa> getMultas() {
 		return multas;
+	}
+
+	public void setMulta(ArrayList<Multa> multas) {
+		this.multas = multas;
 	}
 
 	public Long getId() {
@@ -46,6 +70,13 @@ public class Agente {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
 
 	public Long getPlaca() {
 		return placa;
@@ -55,24 +86,12 @@ public class Agente {
 		this.placa = placa;
 	}
 
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
-	public void setMultas(ArrayList<Multa> multas) {
-		this.multas = multas;
-	}
-
 	@Override
 	public String toString() {
-		return "Agente [id=" + id + ", nombre=" + nombre + ", placa=" + placa + ", pass=" + pass + ", multas=" + multas
-				+ "]";
+		return "Agente [id=" + id + ", nombre=" + nombre + ", placa=" + placa + ", multas=" + multas + ", pass=" + pass
+				+ ", importeAnual=" + importeAnual + ", importeMensual=" + importeMensual + "]";
 	}
 
-	
-	
+
+
 }

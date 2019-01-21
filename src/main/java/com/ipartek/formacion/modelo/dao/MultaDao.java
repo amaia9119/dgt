@@ -2,6 +2,8 @@ package com.ipartek.formacion.modelo.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -31,6 +33,7 @@ public class MultaDao {
 	private static final String SQL_INSERT = "{call multa_insert(?, ?, ?, ?, ?)}";
 
 	private final static String SQL_UPDATE_FECHA_BAJA = "{call multa_update(?)}";
+	private final static String SQL_RECAUDACION_ANYO = "SELECT id_agente,anyo,numero_multas,importe_anual FROM v_objetivos WHERE id_agente=? AND anyo=?";
 
 	// constructor privado, solo acceso por getInstance()
 	private MultaDao() {
@@ -60,6 +63,26 @@ public class MultaDao {
 			
 			cs.setInt(1, opcion);
 			try (ResultSet rs = cs.executeQuery()) {
+				while (rs.next()) {
+					multas.add(rowMapper(rs));
+					LOG.info("Id valido");
+				}
+			}
+		} catch (Exception e) {
+			LOG.debug(e);
+		}
+		return multas;
+	}
+	
+	public ArrayList<Multa> getRecaudacionAnyo( Long id_agente, Date anyo) {
+
+		ArrayList<Multa> multas = new ArrayList<Multa>();
+		String sql = SQL_RECAUDACION_ANYO;
+		try (Connection conn = ConnectionManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
+			
+			ps.setLong(1, id_agente);
+			ps.setDate(2, anyo);
+			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 					multas.add(rowMapper(rs));
 					LOG.info("Id valido");
