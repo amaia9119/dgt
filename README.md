@@ -21,6 +21,7 @@ En los listados de multas puedes ordenarlas tanto por importe como por cualquier
 ![listado multas](https://github.com/amaia9119/dgt/blob/master/imgReadme/listado.PNG)
 ![listado multas dadas de baja](https://github.com/amaia9119/dgt/blob/master/imgReadme/listadoBaja.PNG)
 
+## Configuración del proyecto
 Es un proyecto Java 3.0 Mavenizado.
 
 Para el diseño se ha utilizado:
