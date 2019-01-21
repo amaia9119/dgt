@@ -103,8 +103,9 @@ public class MultasController extends HttpServlet {
 					 }
 					 
 					 
-					 errores += "</ul>";				 
-					 request.setAttribute("mensaje", errores);
+					 errores += "</ul>";
+					 request.setAttribute("mensaje", new Alerta(Alerta.TIPO_DANGER, "importe o concepto no válidos"));
+					 //request.setAttribute("mensaje", errores);
 					 response.sendRedirect("privado/multar.jsp");
 					 
 					 

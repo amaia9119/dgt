@@ -2,6 +2,12 @@
 <%@ include file="../includes/navbar.jsp"  %>
 <%@ include file="../includes/mensajes.jsp"  %>
 
+
+<c:if test="${not empty mensaje}">	  
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+	 ${mensaje.texto}			 
+	</div>	 	
+</c:if>
 <form action="multas" method="post">
 			<input type="hidden" class="form-control" name="coche_id" value="${coche.id}">
 			<input type="hidden" class="form-control" name="id_agente" value="${sessionScope.ag.id}">

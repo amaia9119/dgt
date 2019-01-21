@@ -5,7 +5,11 @@
 
     <!-- Three columns of text below the carousel -->
     <div class="row">
-    
+<c:if test="${not empty mensaje}">	  
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+	 ${mensaje.texto}			 
+	</div>	 	
+</c:if>
 <form action="login" method="post">
 	<div class="col">
 		<input type="text" class="form-control" name="nombre" placeholder="Introduce tu usuario">

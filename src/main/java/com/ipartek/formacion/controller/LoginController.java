@@ -87,10 +87,10 @@ public class LoginController extends HttpServlet {
 				agente = dao.login(nombre, pass);
 				
 				if ( agente == null ) {
-					request.setAttribute("mensaje", new Alerta(Alerta.TIPO_DANGER, "credenciales no válidas"));
+					//request.setAttribute("mensaje", new Alerta(Alerta.TIPO_DANGER, "credenciales no válidas"));
 				}else {
 					session.setMaxInactiveInterval(60*5);
-					//TODO guardar atributo usuario en sesion
+					
 					session.setAttribute("agente", agente);
 					request.getRequestDispatcher("privado/index.jsp").forward(request, response);
 				}
@@ -104,7 +104,8 @@ public class LoginController extends HttpServlet {
 			if(redirect) {				
 				response.sendRedirect( request.getContextPath() + "/privado/index.jsp");
 			}else {
-				response.sendRedirect( request.getContextPath() + "/login.jsp");
+				request.setAttribute("mensaje", new Alerta(Alerta.TIPO_DANGER, "credenciales no válidas"));
+				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}
 		}
 	}

@@ -2,6 +2,11 @@
 <%@ include file="../includes/navbar.jsp"  %>
 <%@ include file="../includes/mensajes.jsp"  %>
 
+<c:if test="${not empty mensaje}">	  
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+	 ${mensaje.texto}			 
+	</div>	 	
+</c:if>
 <form action="matricula" method="post">
 	<div class="row">
 		<div class="col">
@@ -10,10 +15,5 @@
 	</div>
 	<button type="submit" class="btn btn-dark">Enviar</button>
 </form>
-<c:if test="${not empty mensaje}">	  
-	<div class="alert alert-danger alert-dismissible fade show" role="alert">
-	 ${mensaje.texto}			 
-	</div>	 	
-</c:if>
 			
 <%@ include file="../includes/footer.jsp"  %> 
