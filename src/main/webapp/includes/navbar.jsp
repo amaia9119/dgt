@@ -1,7 +1,10 @@
 <div class="pos-f-t">
   <nav class="navbar navbar-dark bg-dark">
   	<a href="javascript:history.back(-1);" title="Ir la página anterior"><span class="icon-arrow-left2"></span></a>
-  	<span>${sessionScope.agente.nombre}</span>
+  	<ul class="navbar-nav float-right">
+  		<li><span>${sessionScope.agente.nombre}</span></li>
+  		<li><a href="logout" class="btn btn-outline-danger">Cerrar sesion</a></li>
+  	</ul>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

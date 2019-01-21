@@ -1,7 +1,7 @@
 package com.ipartek.formacion.controller;
 
 import java.io.IOException;
-
+import java.util.Set;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.apache.log4j.Logger;
 
@@ -27,6 +31,10 @@ import com.ipartek.formacion.modelo.pojo.Multa;
 @WebServlet("/multas")
 public class MultasController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private ValidatorFactory factory;
+	private Validator validator;
+	
 	private final static Logger LOG = Logger.getLogger(CocheDao.class);
 	private MultaDao daoMulta;
 	private CocheDao daoCoche;
@@ -37,7 +45,10 @@ public class MultasController extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {    
     	super.init(config);
     	daoMulta = MultaDao.getInstance();
-    	daoCoche = CocheDao.getInstance();    	
+    	daoCoche = CocheDao.getInstance();
+    	
+    	factory  = Validation.buildDefaultValidatorFactory();
+    	validator  = factory.getValidator();
     }
 	
 	@Override
@@ -60,7 +71,6 @@ public class MultasController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Long id_coche = Long.parseLong(request.getParameter("coche_id"));
 		
 		// recoger par
 		Long id_coche = Long.parseLong(request.getParameter("coche_id"));		
@@ -79,11 +89,39 @@ public class MultasController extends HttpServlet {
 			m.setConcepto(concepto);
 			m.setCoche(c);
 			if (m != null) {
-				daoMulta.insert(m, ag.getId());
-				//mandar mensaje de que ha creado nice
-				request.setAttribute("mensaje", new Alerta(Alerta.TIPO_SUCCESS, "se ha registrado correctamente"));
-				response.sendRedirect("multas");
-			}
+				
+				// validar
+				
+				Set<ConstraintViolation<Multa>> violations = validator.validate(m);
+				
+				
+				if ( violations.size() > 0) {			// validacion NO PASA
+					
+					 String errores = "<ul>"; 
+					 for (ConstraintViolation<Multa> violation : violations) {					 	
+						 errores += String.format("<li> %s : %s </li>" , violation.getPropertyPath(), violation.getMessage() );					
+					 }
+					 
+					 
+					 errores += "</ul>";
+					 request.setAttribute("mensaje", new Alerta(Alerta.TIPO_DANGER, "importe o concepto no válidos"));
+					 //request.setAttribute("mensaje", errores);
+					 response.sendRedirect("privado/multar.jsp");
+					 
+					 
+					 request.setAttribute("importe", importe);
+					 request.setAttribute("concepto", concepto);
+					 
+					
+				} else {                                // validacion OK
+				
+					daoMulta.insert(m, ag.getId());
+					//mandar mensaje de que ha creado nice
+					request.setAttribute("mensaje", new Alerta(Alerta.TIPO_SUCCESS, "se ha registrado correctamente"));
+					response.sendRedirect("multas");		
+					}
+				}
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

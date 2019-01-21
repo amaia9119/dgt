@@ -16,10 +16,17 @@
 .navbar-nav li a:hover{
 	color: rgba(255,255,255,.5);
 }
-nav > span {
+nav > ul.navbar-nav.float-right > li > span {
     color: rgba(255,255,255,.8);
-    position: absolute;
-    right: 95px;
+}
+ul.navbar-nav.float-right {
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    right: -30px;
+}
+ul.navbar-nav.float-right li {
+    margin: 0 10px;
 }
 main {
     margin-top: 40px;
@@ -65,7 +72,3 @@ form .col {
 	border: none;
     background: transparent;
 }
-/*
-form label, form input {
-    width: 50% !important;
-}*/
