@@ -29,6 +29,7 @@ CREATE TABLE `agente` (
   `nombre` varchar(45) NOT NULL,
   `placa` varchar(45) NOT NULL,
   `id_departamento` int(11) DEFAULT NULL,
+  `pass` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `placa_UNIQUE` (`placa`),
@@ -43,9 +44,26 @@ CREATE TABLE `agente` (
 
 LOCK TABLES `agente` WRITE;
 /*!40000 ALTER TABLE `agente` DISABLE KEYS */;
-INSERT INTO `agente` VALUES (1,'Mahoney','1A',1),(2,'Walker','2A',1),(3,'Monk','3A',2),(4,'Tontin','4A',3),(5,'Paco','5A',3),(6,'Patxi','6A',4),(7,'Endika','7A',4);
+INSERT INTO `agente` VALUES (1,'Mahoney','1A',1,''),(2,'Walker','2A',1,''),(3,'Monk','3A',2,''),(4,'Tontin','4A',3,''),(5,'Paco','5A',3,''),(6,'Patxi','6A',4,''),(7,'Endika','7A',4,'');
 /*!40000 ALTER TABLE `agente` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `agente_BEFORE_INSERT` BEFORE INSERT ON `agente` FOR EACH ROW BEGIN
+	SET new.nombre = TRIM(new.nombre);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `coche`
@@ -73,6 +91,23 @@ LOCK TABLES `coche` WRITE;
 INSERT INTO `coche` VALUES (1,'3548MKZ','Toyota Yaris1',500),(2,'9605EFH','Nissan GTR',900),(3,'8605EGH','Seat Toledo',1900);
 /*!40000 ALTER TABLE `coche` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `coche_BEFORE_INSERT` BEFORE INSERT ON `coche` FOR EACH ROW BEGIN
+	SET new.modelo = TRIM(new.modelo);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `departamento`
@@ -122,7 +157,7 @@ CREATE TABLE `multa` (
   KEY `fk_multas_agentes_idx` (`id_agente`),
   CONSTRAINT `fk_multas_agentes` FOREIGN KEY (`id_agente`) REFERENCES `agente` (`id`),
   CONSTRAINT `fk_multas_coches` FOREIGN KEY (`id_coche`) REFERENCES `coche` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,9 +166,43 @@ CREATE TABLE `multa` (
 
 LOCK TABLES `multa` WRITE;
 /*!40000 ALTER TABLE `multa` DISABLE KEYS */;
-INSERT INTO `multa` VALUES (1,200,'Velocidad','2019-01-07 10:37:11',2,1,'2019-01-11 09:27:05','2019-01-11 09:27:05','0000-00-00 00:00:00'),(2,300,'Carrera ilegal','2019-01-07 10:37:39',1,1,'2019-01-11 09:27:05','2019-01-11 09:27:05','0000-00-00 00:00:00'),(3,500,'Empinar el codo','2019-01-07 10:39:02',3,2,'2019-01-11 09:27:05','2019-01-11 09:27:05','0000-00-00 00:00:00'),(4,600,'Empinar el codo2','2019-01-07 11:54:12',3,3,'2019-01-11 09:27:05','2019-01-11 09:27:05','0000-00-00 00:00:00'),(5,5900,'Empinar el codo duramente','2019-01-08 13:14:42',3,2,'2019-01-11 09:27:05','2019-01-11 09:27:05','2019-01-16 14:01:03'),(6,550,'embriaguez','2019-01-14 11:40:21',2,4,'2019-01-14 11:40:21',NULL,NULL);
+INSERT INTO `multa` VALUES (1,200,'Velocidad','2019-01-07 10:37:11',2,1,'2019-01-11 09:27:05','2019-01-11 09:27:05',NULL),(2,300,'Carrera ilegal','2019-01-07 10:37:39',1,1,'2019-01-11 09:27:05','2019-01-11 09:27:05',NULL),(3,500,'Empinar el codo','2019-01-07 10:39:02',3,2,'2019-01-11 09:27:05','2019-01-11 09:27:05',NULL),(4,600,'Empinar el codo2','2019-01-07 11:54:12',3,3,'2019-01-11 09:27:05','2019-01-11 09:27:05',NULL),(5,5900,'Empinar el codo duramente','2019-01-08 13:14:42',3,2,'2019-01-11 09:27:05','2019-01-11 09:27:05','2019-01-17 08:38:58'),(6,550,'embriaguez','2019-01-14 11:40:21',2,4,'2019-01-14 11:40:21',NULL,'2019-01-17 10:46:13'),(7,333,'ert','2019-01-17 10:08:00',1,4,'2019-01-17 10:08:00',NULL,'2019-01-17 10:16:20'),(8,456,'fff','2019-01-17 10:35:42',2,4,'2019-01-17 10:35:42',NULL,'2019-01-17 10:36:01');
 /*!40000 ALTER TABLE `multa` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tbi_multa_check` BEFORE INSERT ON `multa` FOR EACH ROW BEGIN
+	if new.importe < 0 then
+		set new.importe = 0;
+	end if;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Temporary view structure for view `v_objetivos`
+--
+
+DROP TABLE IF EXISTS `v_objetivos`;
+/*!50001 DROP VIEW IF EXISTS `v_objetivos`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8mb4;
+/*!50001 CREATE VIEW `v_objetivos` AS SELECT 
+ 1 AS `id_agente`,
+ 1 AS `anyo`,
+ 1 AS `numero_multas`,
+ 1 AS `importe_anual`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Dumping routines for database 'dgt'
@@ -232,7 +301,7 @@ BEGIN
 						multa.concepto AS 'concepto',
 						multa.fecha AS 'fecha',
 						multa.fecha_baja AS 'fecha_baja'
-					FROM multa INNER JOIN agente ON multa.id_agente=agente.id 
+					FROM multa 
 							INNER JOIN coche ON multa.id_coche=coche.id
                             WHERE fecha_baja IS  NOT NULL;
 		end IF;
@@ -286,6 +355,24 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `v_objetivos`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_objetivos`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_objetivos` AS select `multa`.`id_agente` AS `id_agente`,year(`multa`.`fecha_alta`) AS `anyo`,count(0) AS `numero_multas`,sum(`multa`.`importe`) AS `importe_anual` from `multa` group by `multa`.`id_agente`,year(`multa`.`fecha_alta`) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -296,4 +383,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-16 14:14:56
+-- Dump completed on 2019-01-21 11:36:37
