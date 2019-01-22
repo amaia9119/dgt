@@ -13,7 +13,7 @@
     <div class="bg-dark p-4">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="${pageContext.request.contextPath}/privado/index.jsp">Inicio <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="${pageContext.request.contextPath}/matricula">Multar</a>

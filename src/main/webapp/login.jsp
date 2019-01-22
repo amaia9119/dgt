@@ -5,6 +5,7 @@
 
     <!-- Three columns of text below the carousel -->
     <div class="row">
+    <img src="img/car.png" alt="coche policia">
 <c:if test="${not empty mensaje}">	  
 	<div class="alert alert-danger alert-dismissible fade show" role="alert">
 	 ${mensaje.texto}			 
