@@ -93,23 +93,6 @@ public class MultaDao {
 		}
 		return multas;
 	}
-
-//	public ArrayList<Multa> getAllByIdAgente(Long idAgente) throws SQLException {
-//		ArrayList<Multa> multas = new ArrayList<>();
-//		String sql = SQL_GETALLBYIDAGENTE;
-//		try (Connection conn = ConnectionManager.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
-//			pst.setLong(1, idAgente);
-//			try (ResultSet rs = pst.executeQuery()) {
-//				while (rs.next()) {
-//					multas.add(rowMapper(rs));
-//				}
-//			}
-//		} catch (Exception e) {
-//			LOG.debug(e);
-//		}
-//
-//		return multas;
-//	}
 	
 	/**
 	 * 

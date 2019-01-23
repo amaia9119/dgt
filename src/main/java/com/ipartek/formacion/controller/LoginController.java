@@ -89,7 +89,7 @@ public class LoginController extends HttpServlet {
 				if ( agente == null ) {
 					//request.setAttribute("mensaje", new Alerta(Alerta.TIPO_DANGER, "credenciales no válidas"));
 				}else {
-					session.setMaxInactiveInterval(60*5);
+					session.setMaxInactiveInterval(60*5*5);
 					
 					session.setAttribute("agente", agente);
 					request.getRequestDispatcher("privado/index.jsp").forward(request, response);
