@@ -4,6 +4,7 @@ Aplicación móvil para crear multas y ver el listado de las multas ya creadas.
 ## Base de datos
 Para descargarse la base de datos => https://github.com/amaia9119/dgt/tree/master/SQL
 ![base de datos](https://github.com/amaia9119/dgt/blob/master/imgReadme/bd.PNG)
+
 Para manipular la base de datos, hay que editar el archivo BBDD.PROPERTIES
 ![properties](https://github.com/amaia9119/dgt/blob/master/imgReadme/properties.PNG)
 
