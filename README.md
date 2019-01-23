@@ -4,6 +4,17 @@ Aplicación móvil para crear multas y ver el listado de las multas ya creadas.
 ## Base de datos
 Para descargarse la base de datos => https://github.com/amaia9119/dgt/tree/master/SQL
 ![base de datos](https://github.com/amaia9119/dgt/blob/master/imgReadme/bd.PNG)
+Para manipular la base de datos, hay que editar el archivo BBDD.PROPERTIES
+![properties](https://github.com/amaia9119/dgt/blob/master/imgReadme/properties.PNG)
+
+## Datos de prueba
+Aqui os dejamos unos datos de prueba, para que probeis la aplicacion.
+
+LOGIN:
+![datosLogin](https://github.com/amaia9119/dgt/blob/master/imgReadme/datosAgente.PNG)
+
+INSERTAR:
+![datosInsertar](https://github.com/amaia9119/dgt/blob/master/imgReadme/datoscoche.PNG)
 
 ## Entrar
 Al abrir la aplicación te pide el usuario y contraseña y, si son correctas accedes al área privada en la que puedes multar, ver las multas puestas y las multas dadas de baja.
@@ -21,7 +32,7 @@ En los listados de multas puedes ordenarlas tanto por importe como por cualquier
 ![listado multas](https://github.com/amaia9119/dgt/blob/master/imgReadme/listado.PNG)
 ![listado multas dadas de baja](https://github.com/amaia9119/dgt/blob/master/imgReadme/listadoBaja.PNG)
 
-## Configuración del proyecto
+## Información del proyecto
 Es un proyecto Java 3.0 Mavenizado.
 
 Para el diseño se ha utilizado:
